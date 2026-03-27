@@ -1,4 +1,4 @@
-package com.logitrack.shipment;
+package com.paquetrack.shipment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
