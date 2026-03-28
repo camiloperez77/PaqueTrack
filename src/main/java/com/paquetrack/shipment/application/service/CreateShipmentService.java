@@ -4,28 +4,21 @@ import com.paquetrack.shipment.domain.model.Shipment;
 import com.paquetrack.shipment.domain.port.in.CreateShipmentUseCase;
 import com.paquetrack.shipment.domain.port.out.ShipmentRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
 public class CreateShipmentService implements CreateShipmentUseCase {
-    
+
     private final ShipmentRepositoryPort repository;
-    
+
     @Override
     @Transactional
     public Shipment createShipment(Shipment shipment) {
-        // Generar ID único
-        shipment.setId(java.util.UUID.randomUUID().toString());
-        
-        // Generar tracking ID
-        shipment.setTrackingId(shipment.generateTrackingId());
-        
-        // Marcar como creado
+        shipment.setId(UUID.randomUUID().toString());
+        long next = repository.count() + 1;
+        shipment.setTrackingId(String.format("LOG-2026-%05d", next));
         shipment.markAsCreated();
-        
-        // Persistir
         return repository.save(shipment);
     }
 }

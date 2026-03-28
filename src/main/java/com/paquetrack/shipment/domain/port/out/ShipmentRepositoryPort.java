@@ -7,4 +7,5 @@ public interface ShipmentRepositoryPort {
     Shipment save(Shipment shipment);
     Optional<Shipment> findById(String id);
     Optional<Shipment> findByTrackingId(String trackingId);
+    long count();
 }

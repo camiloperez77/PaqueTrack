@@ -1,6 +1,7 @@
+# .gitignore
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -18,6 +19,7 @@ target/
 *.iws
 *.iml
 *.ipr
+out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +33,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment variables ###
+.env
+.env.local
+.env.*.local
+application-supabase.yml  # Si contiene contraseñas directamente
+
+### Logs ###
+*.log
