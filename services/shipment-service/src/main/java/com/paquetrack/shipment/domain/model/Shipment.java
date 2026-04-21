@@ -1,11 +1,15 @@
 package com.paquetrack.shipment.domain.model;
 
-import lombok.Builder;
-import lombok.Data;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@Builder(toBuilder = true)
+@ToString
 public class Shipment {
     private String id;
     private String trackingId;
@@ -16,20 +20,46 @@ public class Shipment {
     private String recipientName;
     private String recipientAddress;
     private String recipientCity;
-    private Double weightKg;
+    private BigDecimal weightKg;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
-    // Método de dominio
-    public void markAsCreated() {
-        this.status = "CREATED";
+
+    // Auditoría
+    private String createdBy;
+    private String createdByRole;
+
+    // Métodos de dominio — modifican estado devolviendo una nueva instancia
+    public Shipment markAsCreated() {
         LocalDateTime now = LocalDateTime.now();
-        this.createdAt = now;
-        this.updatedAt = now;
+        return this.toBuilder()
+                .status("CREATED")
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
     }
-    
-    public void updateStatus(String newStatus) {
-        this.status = newStatus;
-        this.updatedAt = LocalDateTime.now();
+
+    public Shipment updateStatus(String newStatus) {
+        return this.toBuilder()
+                .status(newStatus)
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    // Establecer el creador durante la creación
+    public Shipment withCreator(String username, String role) {
+        return this.toBuilder()
+                .createdBy(username)
+                .createdByRole(role)
+                .build();
+    }
+
+    // Helper para verificar permisos
+    public boolean wasCreatedBy(String username) {
+        return this.createdBy != null && this.createdBy.equals(username);
+    }
+
+    // Verificar si el creador tiene rol específico
+    public boolean wasCreatedByRole(String role) {
+        return this.createdByRole != null && this.createdByRole.equals(role);
     }
 }

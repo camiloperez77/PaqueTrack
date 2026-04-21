@@ -1,0 +1,36 @@
+name: SonarCloud Analysis - shipment-service
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sonar:
+    name: Build, Test & Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build, test and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SPRING_PROFILES_ACTIVE: test
+        run: |
+          mvn verify sonar:sonar \
+            -Dspring.profiles.active=test \
+            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.organization=andrest3086 \
+            -Dsonar.projectKey=AndresT3086_shipment-service \
+            -Dsonar.host.url=https://sonarcloud.io

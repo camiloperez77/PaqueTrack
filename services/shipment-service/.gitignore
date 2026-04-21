@@ -1,44 +1,63 @@
-# .gitignore
-HELP.md
+# =========================
+# Build artifacts (Maven/Java)
+# =========================
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+README.md
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Environment variables ###
-.env
-.env.local
-.env.*.local
-application-supabase.yml  # Si contiene contraseñas directamente
-
-### Logs ###
+# =========================
+# Logs and temp files
+# =========================
 *.log
+logs/
+*.tmp
+*.swp
+*.swo
+*~
+
+# =========================
+# OS-generated files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE/editor local files
+# =========================
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# =========================
+# Environment/secrets
+# =========================
+.env
+.env.*
+!.env.example
+*.local
+
+# =========================
+# Spring Boot runtime files
+# =========================
+*.pid
+
+# =========================
+# Docker/dev-local overrides
+# =========================
+docker-compose.override.yml
+application-dev.yml
+docker-compose.yml
+
+
+# =========================
+# Test and coverage outputs
+# =========================
+coverage/
+site/

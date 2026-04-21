@@ -1,0 +1,29 @@
+jwt:
+  secret: "mi-clave-secreta-para-jwt-debe-ser-larga-y-segura-32bytes"
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+logging:
+  level:
+    com.paquetrack.shipment.infrastructure.security: DEBUG
+    io.jsonwebtoken: TRACE
+    org.springframework.security: DEBUG

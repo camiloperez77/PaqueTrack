@@ -1,35 +1,18 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:shipmentdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: 
-  
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  
-  # Deshabilitar Flyway y seguridad temporalmente
-  flyway:
-    enabled: false
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  application:
+    name: shipment-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:prod}
 
 server:
-  port: 8081
+  port: ${PORT:${SERVER_PORT:8080}}
 
-logging:
-  level:
-    org.springframework.boot: INFO
-    org.hibernate: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
